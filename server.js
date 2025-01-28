@@ -25,7 +25,7 @@ const startApolloServer = async (typeDefs, resolvers) => {
   await server.start();
 
   app.use(
-    "/api",
+    "/graphql",
     cors(),
     bodyParser.json(),
     expressMiddleware(server, {
@@ -37,7 +37,7 @@ const startApolloServer = async (typeDefs, resolvers) => {
     httpServer.listen({ port: process.env.PORT || 4000 }, resolve)
   );
 
-  console.log(`PORT : ${process.env.PORT || 4000}`);
+  console.log(`ENDPOINT : ${process.env.PORT || 4000}/graphql`);
 };
 
 startApolloServer(typeDefs, resolvers);
