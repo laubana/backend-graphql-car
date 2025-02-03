@@ -2,21 +2,17 @@
   "name": "backend-graphql-car",
   "version": "1.0.0",
   "main": "index.js",
-  "author": "Yuhwan Ban",
-  "license": "MIT",
-  "type": "module",
   "scripts": {
-    "start": "node ./server.js --exec babel-node -e js",
-    "dev": "nodemon ./server.js --exec babel-node -e js"
+    "start": "node ./index.js --exec babel-node -e js",
+    "dev": "nodemon ./index.js --exec babel-node -e js"
   },
   "dependencies": {
     "@apollo/server": "^4.10.0",
+    "@graphql-tools/merge": "^9.0.17",
     "dotenv": "^16.4.7",
     "express": "^4.18.2",
     "graphql": "^16.8.1",
-    "lodash.filter": "^4.6.0",
-    "lodash.find": "^4.6.0",
-    "lodash.remove": "^4.7.0"
+    "mongoose": "^8.9.6"
   },
   "devDependencies": {
     "babel-cli": "^6.26.0",

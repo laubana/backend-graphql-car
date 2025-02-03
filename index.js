@@ -7,7 +7,9 @@ import dotenv from "dotenv";
 import express from "express";
 import http from "http";
 
-import { typeDefs, resolvers } from "./src/schema.js";
+import corsOptions from "./configs/cors";
+import mergedResolvers from "./resolvers";
+import mergedTypeDefs from "./typeDefs";
 
 dotenv.config();
 
@@ -16,28 +18,28 @@ const startApolloServer = async (typeDefs, resolvers) => {
 
   const httpServer = http.createServer(app);
 
-  const server = new ApolloServer({
+  const apolloServer = new ApolloServer({
     typeDefs,
     resolvers,
     plugins: [ApolloServerPluginDrainHttpServer({ httpServer })],
   });
 
-  await server.start();
+  await apolloServer.start();
 
   app.use(
     "/graphql",
-    cors(),
+    cors(corsOptions),
     bodyParser.json(),
-    expressMiddleware(server, {
+    expressMiddleware(apolloServer, {
       context: async ({ req }) => ({ token: req.headers.token }),
     })
   );
 
   await new Promise((resolve) =>
-    httpServer.listen({ port: process.env.PORT || 4000 }, resolve)
+    httpServer.listen({ port: process.env.PORT }, resolve)
   );
 
-  console.log(`ENDPOINT : ${process.env.PORT || 4000}/graphql`);
+  console.log(`Server launched at port ${process.env.PORT} 🚀`);
 };
 
-startApolloServer(typeDefs, resolvers);
+startApolloServer(mergedTypeDefs, mergedResolvers);
