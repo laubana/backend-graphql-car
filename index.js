@@ -6,6 +6,7 @@ import cors from "cors";
 import dotenv from "dotenv";
 import express from "express";
 import http from "http";
+import { join } from "path";
 
 import corsOptions from "./configs/cors";
 import mergedResolvers from "./resolvers";
@@ -26,6 +27,11 @@ const startApolloServer = async (typeDefs, resolvers) => {
 
   await apolloServer.start();
 
+  app.use("/", express.static(join(__dirname, "public")));
+  app.use(
+    "/favicon.ico",
+    express.static(join(__dirname, "public", "favicon.ico"))
+  );
   app.use(
     "/graphql",
     cors(corsOptions),
