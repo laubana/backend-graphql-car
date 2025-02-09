@@ -1,30 +1,30 @@
-import { model, models, Schema, Types } from "mongoose";
+import mongoose from "mongoose";
 
-const carSchema = new Schema(
+const carSchema = new mongoose.Schema(
   {
     year: {
-      required: [true, "Year is required."],
       type: String,
+      required: [true, "Year is required."],
     },
     make: {
-      required: [true, "Make is required."],
       type: String,
+      required: [true, "Make is required."],
     },
     model: {
-      required: [true, "Model is required."],
       type: String,
+      required: [true, "Model is required."],
     },
     price: {
-      required: [true, "Price is required."],
       type: String,
+      required: [true, "Price is required."],
     },
     owner: {
+      type: mongoose.Schema.Types.ObjectId,
       ref: "Owner",
       required: [true, "Owner is required."],
-      type: Types.ObjectId,
     },
   },
   { timestamps: true }
 );
 
-export default models["Car"] || model("Car", carSchema);
+export default mongoose.models["Car"] || mongoose.model("Car", carSchema);

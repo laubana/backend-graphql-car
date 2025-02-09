@@ -1,17 +1,17 @@
-import { model, models, Schema } from "mongoose";
+import mongoose from "mongoose";
 
-const ownerSchema = new Schema(
+const ownerSchema = new mongoose.Schema(
   {
     firstName: {
-      required: [true, "First name is required."],
       type: String,
+      required: [true, "First name is required."],
     },
     lastName: {
-      required: [true, "Last name is required."],
       type: String,
+      required: [true, "Last name is required."],
     },
   },
   { timestamps: true }
 );
 
-export default models["Owner"] || model("Owner", ownerSchema);
+export default mongoose.models["Owner"] || mongoose.model("Owner", ownerSchema);
