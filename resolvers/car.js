@@ -1,4 +1,4 @@
-import connect from "../configs/db";
+import { connect } from "../configs/db";
 import Car from "../models/Car";
 
 const carResolver = {
@@ -40,7 +40,7 @@ const carResolver = {
 
       await connect();
 
-      await Car.findByIdAndDelete(carId);
+      await Car.findByIdAndDelete(carId).lean();
 
       return true;
     },

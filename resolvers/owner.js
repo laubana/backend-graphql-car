@@ -1,4 +1,4 @@
-import connect from "../configs/db";
+import { connect } from "../configs/db";
 import Car from "../models/Car";
 import Owner from "../models/Owner";
 
@@ -38,7 +38,7 @@ const ownerResolver = {
 
       await Car.deleteMany({ owner: ownerId });
 
-      await Owner.findByIdAndDelete(ownerId);
+      await Owner.findByIdAndDelete(ownerId).lean();
 
       return true;
     },
@@ -51,7 +51,7 @@ const ownerResolver = {
         ownerId,
         { firstName, lastName },
         { new: true }
-      );
+      ).lean();
 
       return updatedOwner;
     },
