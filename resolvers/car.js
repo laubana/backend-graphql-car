@@ -1,4 +1,4 @@
-import { connect } from "../configs/db";
+import dbConfig from "../configs/dbConfig";
 import Car from "../models/Car";
 
 const carResolver = {
@@ -6,7 +6,7 @@ const carResolver = {
     getCars: async (root, args) => {
       const { ownerId } = args;
 
-      await connect();
+      await dbConfig.connect();
 
       const existingCars = await Car.find({ owner: ownerId })
         .populate({ path: "owner" })
@@ -19,7 +19,7 @@ const carResolver = {
     addCar: async (root, args) => {
       const { year, make, model, price, ownerId } = args;
 
-      await connect();
+      await dbConfig.connect();
 
       const newCar = await Car.create({
         year,
@@ -38,7 +38,7 @@ const carResolver = {
     removeCar: async (root, args) => {
       const { carId } = args;
 
-      await connect();
+      await dbConfig.connect();
 
       await Car.findByIdAndDelete(carId).lean();
 
@@ -47,7 +47,7 @@ const carResolver = {
     updateCar: async (root, args) => {
       const { carId, year, make, model, price, ownerId } = args;
 
-      await connect();
+      await dbConfig.connect();
 
       const updatedCar = await Car.findByIdAndUpdate(
         carId,

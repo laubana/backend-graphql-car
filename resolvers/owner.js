@@ -1,11 +1,11 @@
-import { connect } from "../configs/db";
+import dbConfig from "../configs/dbConfig";
 import Car from "../models/Car";
 import Owner from "../models/Owner";
 
 const ownerResolver = {
   Query: {
     getOwners: async () => {
-      await connect();
+      await dbConfig.connect();
 
       const existingOwners = await Owner.find().lean();
 
@@ -14,7 +14,7 @@ const ownerResolver = {
     getOwner: async (root, args) => {
       const { ownerId } = args;
 
-      await connect();
+      await dbConfig.connect();
 
       const existingOwner = await Owner.findById(ownerId).lean();
 
@@ -25,7 +25,7 @@ const ownerResolver = {
     addOwner: async (root, args) => {
       const { firstName, lastName } = args;
 
-      await connect();
+      await dbConfig.connect();
 
       const newOwner = await Owner.create({ firstName, lastName });
 
@@ -34,7 +34,7 @@ const ownerResolver = {
     removeOwner: async (root, args) => {
       const { ownerId } = args;
 
-      await connect();
+      await dbConfig.connect();
 
       await Car.deleteMany({ owner: ownerId });
 
@@ -45,7 +45,7 @@ const ownerResolver = {
     updateOwner: async (root, args) => {
       const { ownerId, firstName, lastName } = args;
 
-      await connect();
+      await dbConfig.connect();
 
       const updatedOwner = await Owner.findByIdAndUpdate(
         ownerId,

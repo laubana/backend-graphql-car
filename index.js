@@ -6,9 +6,9 @@ import cors from "cors";
 import dotenv from "dotenv";
 import express from "express";
 import http from "http";
-import { join } from "path";
+import path from "path";
 
-import corsOptions from "./configs/cors";
+import corsConfig from "./configs/corsConfig";
 import mergedResolvers from "./resolvers";
 import mergedTypeDefs from "./typeDefs";
 
@@ -27,14 +27,14 @@ const startApolloServer = async (typeDefs, resolvers) => {
 
   await apolloServer.start();
 
-  app.use("/", express.static(join(__dirname, "public")));
+  app.use("/", express.static(path.join(__dirname, "public")));
   app.use(
     "/favicon.ico",
-    express.static(join(__dirname, "public", "favicon.ico"))
+    express.static(path.join(__dirname, "public", "favicon.ico"))
   );
   app.use(
     "/graphql",
-    cors(corsOptions),
+    cors(corsConfig.corsOptions),
     bodyParser.json(),
     expressMiddleware(apolloServer, {
       context: async ({ req }) => ({ token: req.headers.token }),
